@@ -45,10 +45,19 @@ def rename_mons(Api):
     pokemons = [defaultdict(int, p) for p in pokemons]  # replace missing keys with 0
 
     for pokemon in pokemons:
-        print("Renaming pokemon: [%s]" % str(pokemon['pokemon_id']))
-        nickname = "{a}/{d}/{s}".format(a=hex(pokemon['individual_attack']).replace("0x", ""),
-                                        d=hex(pokemon['individual_defense']).replace("0x", ""),
-                                        s=hex(pokemon['individual_stamina']).replace("0x", ""))
+        a = pokemon['individual_attack']
+        d = pokemon['individual_defense']
+        s = pokemon['individual_stamina']
+
+        percentage = int( ((a+d+s)/45)*100 )
+
+        print("Renaming pokemon: [%s]. " % str(pokemon['pokemon_id']), end="")
+        if percentage < 85:
+            print("It sucks!")
+        else:
+            print("Percentage is: "+str(percentage))
+
+        nickname = "{percentage}% {a}/{d}/{s}".format(**locals())
         # nickname = str(pokemon['individual_attack']+pokemon['individual_defense']+pokemon['individual_stamina'])
         Api.nickname_pokemon(pokemon_id=pokemon['id'], nickname=nickname)
         time.sleep(1)
