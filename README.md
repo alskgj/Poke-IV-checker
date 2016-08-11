@@ -14,3 +14,7 @@ a/b/c where (a, b, c) corresponds to your pokemons
 ## Usage
 - Change the example configfile or create a new configfile.
 - Run with python3 main.py
+
+## Usage with Docker
+- Build the Dockerfile: 'docker build -t <myname>/pokeiv .'
+- Run the script: 'docker run -v $(pwd):/workspace -it <myname>/pokeiv'
